@@ -100,3 +100,23 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
             return false;
     }
 }
+
+// https://docs.qmk.fm/tap_hold#tapping-term
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case HOME_ESC:
+            // return TAPPING_TERM + 1250;
+            return 150;
+        default:
+            return TAPPING_TERM;
+    }
+}
+
+bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case HOME_ESC:
+            return false;
+        default:
+            return true;
+    }
+}

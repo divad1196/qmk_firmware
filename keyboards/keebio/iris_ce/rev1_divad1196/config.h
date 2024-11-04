@@ -36,6 +36,13 @@
 // https://docs.qmk.fm/tap_hold#hold-on-other-key-press
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
+// https://docs.qmk.fm/tap_hold#tapping-term
+#define TAPPING_TERM_PER_KEY
+
+// https://docs.qmk.fm/tap_hold#retro-tapping
+#define RETRO_TAPPING_PER_KEY
+
+
 // https://docs.qmk.fm/keycodes_basic#basic-keycodes
 
 #define HOME_ESC LCTL_T(KC_ESC)
