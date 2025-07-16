@@ -22,15 +22,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_QWERTY] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
+     QK_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                               KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
+     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                               KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC, 
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      HOME_ESC, HOME_A, HOME_S,   HOME_D,  HOME_F,   KC_G,                               KC_H,  HOME_J,  HOME_K,  HOME_L, HOME_SCLN,KC_QUOT,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     C_LSFT,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,   KC_MINS,          KC_EQUAL, KC_N,    KC_M,   KC_COMM,  KC_DOT,  KC_SLSH, C_RSFT,
+     C_LSFT,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,   KC_NO,            TG_HOME,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, C_RSFT,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    KC_LALT,  KC_ENT, TL_LOWR,                     TL_UPPR, KC_SPC, KC_RALT
+                                    KC_LALT, TL_LOWR, KC_ENT,                    TL_UPPR, KC_SPC, KC_RALT
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
   [_HOME_ROW_MOD] = LAYOUT(
@@ -49,15 +49,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_LOWER] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                            KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_DEL,
+     KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                            KC_HOME, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_DEL,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     _______,  KC_GRV, KC_LCBR, KC_LBRC, KC_LPRN,  KC_NO,                             KC_NO,    KC_RPRN, KC_RBRC, KC_RCBR, KC_EQUAL,KC_BSLS,
+     _______,  KC_GRV,    KC_UP,   KC_NO,  KC_NO, KC_LPRN,                            KC_RPRN, KC_HOME,  KC_UP,  KC_PGUP, KC_EQUAL,  KC_BSLS,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_CAPS,  KC_NO,   KC_NO,   KC_NO,   KC_NO,    KC_NO,                            KC_LEFT, KC_DOWN,  KC_UP,  KC_RGHT, KC_PLUS, KC_PIPE,
+     KC_CAPS,  KC_LEFT, KC_DOWN, KC_RGHT,   KC_NO, KC_LBRC,                            KC_RBRC, KC_LEFT, KC_DOWN, KC_RGHT, KC_PLUS, KC_PIPE,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     _______,   KC_NO,  KC_NO,   KC_NO,   KC_NO,  KC_NO, _______,            TG_HOME,  KC_NO,   KC_NO,   KC_NO,  KC_NO,  KC_MINS, _______,
+     _______,   KC_NO,  KC_NO,   KC_NO,   KC_NO,  KC_LCBR, _______,          _______, KC_RCBR, KC_END,   KC_NO, KC_PGDN,   KC_MINS, _______,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    _______, KC_NO,   _______,                    _______, KC_LGUI, KC_NO
+                                    _______, _______,   KC_NO,                   _______, KC_LGUI, KC_NO
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
