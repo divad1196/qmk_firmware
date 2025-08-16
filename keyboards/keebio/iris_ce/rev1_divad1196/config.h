@@ -47,6 +47,8 @@
 // https://docs.qmk.fm/tap_hold#retro-tapping
 #define RETRO_TAPPING_PER_KEY
 
+#define LT_ENTER LT(TRI_LAYER_UPPER_LAYER, KC_ENT)
+#define LT_SPACE LT(TRI_LAYER_LOWER_LAYER, KC_SPC)
 
 // https://docs.qmk.fm/keycodes_basic#basic-keycodes
 

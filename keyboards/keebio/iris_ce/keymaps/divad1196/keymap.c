@@ -32,7 +32,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      C_LSFT,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,   KC_HOME,          KC_EQUAL, KC_N,    KC_M,   KC_COMM,  KC_DOT,  KC_SLSH, KC_BSLS,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    KC_LALT, TL_LOWR, TL_UPPR,                   KC_ENT,   KC_SPC, KC_RALT
+                                    KC_LALT, LT_SPACE, LT_ENTER,                 LT_ENTER, LT_SPACE, KC_RALT
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 // KC_PGUP, KC_PGDN
@@ -62,7 +62,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      RGB_MOD,  KC_NO,   KC_NO,   KC_NO,    KC_NO,  KC_LCBR, KC_NO,            KC_NO,   KC_RPRN,   KC_P1,   KC_P2,   KC_P3,   KC_DOT, KC_EQUAL,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    _______, _______, _______,                   KC_ENT,   KC_SPC,  KC_P0
+                                    _______, _______, _______,                   _______, _______,  KC_P0
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
   [_ADJUST] = LAYOUT(
@@ -75,7 +75,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      QK_BOOT,    EE_CLR,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   _______,        _______,  KC_NO,   KC_NO,   RGB_HUD, RGB_SAD, RGB_VAD, EE_CLR,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    _______, _______, _______,                   _______, _______, _______
+                                    _______, _______, _______,                   _______, _______, KC_NO
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 };
@@ -110,4 +110,8 @@ bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
         default:
             return true;
     }
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    return update_tri_layer_state(state, TRI_LAYER_LOWER_LAYER, TRI_LAYER_UPPER_LAYER, TRI_LAYER_ADJUST_LAYER);
 }
