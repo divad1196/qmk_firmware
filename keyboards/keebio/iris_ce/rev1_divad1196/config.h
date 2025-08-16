@@ -16,10 +16,15 @@
 
 
 // https://docs.qmk.fm/features/tri_layer#keycodes
-#define TG_HOME TG(1)
-#define TRI_LAYER_LOWER_LAYER 2
-#define TRI_LAYER_UPPER_LAYER 3
-#define TRI_LAYER_ADJUST_LAYER 4
+// #define TG_HOME TG(1)
+// #define TRI_LAYER_LOWER_LAYER 2
+// #define TRI_LAYER_UPPER_LAYER 3
+// #define TRI_LAYER_ADJUST_LAYER 4
+
+// Default values
+#define TRI_LAYER_LOWER_LAYER 1
+#define TRI_LAYER_UPPER_LAYER 2
+#define TRI_LAYER_ADJUST_LAYER 3
 
 
 // Home Row Mod
@@ -49,8 +54,8 @@
 // https://docs.qmk.fm/features/space_cadet#keycodes
 // https://github.com/qmk/qmk_firmware/blob/master/docs/keycodes.md#space-cadet-space-cadet
 // https://docs.qmk.fm/keycodes_us_ansi_shifted#keycodes
-#define C_LSFT SC_LSPO // LSFT_T(KC_LPRN) // 
-#define C_RSFT SC_RSPC // RSFT_T(KC_RPRN) // 
+#define C_LSFT SC_LSPO // LSFT_T(KC_LPRN) //
+#define C_RSFT SC_RSPC // RSFT_T(KC_RPRN) //
 
 // // Left-hand home row mods
 #define HOME_A LGUI_T(KC_A)
