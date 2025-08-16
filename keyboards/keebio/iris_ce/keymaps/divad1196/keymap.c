@@ -30,7 +30,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      HOME_ESC, HOME_A, HOME_S,   HOME_D,  HOME_F,   KC_G,                               KC_H,  HOME_J,  HOME_K,  HOME_L, HOME_SCLN,KC_QUOT,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     C_LSFT,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,   KC_HOME,          KC_EQUAL, KC_N,    KC_M,   KC_COMM,  KC_DOT,  KC_SLSH, KC_NUBS,
+     C_LSFT,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,   KC_HOME,          KC_EQUAL, KC_N,    KC_M,   KC_COMM,  KC_DOT,  KC_SLSH, KC_BSLS,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     KC_LALT, TL_LOWR, TL_UPPR,                   KC_ENT,   KC_SPC, KC_RALT
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -43,23 +43,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      _______,  KC_GRV, KC_LCBR, KC_LBRC, KC_LPRN,  KC_NO,                             KC_NO,    KC_RPRN, KC_RBRC, KC_RCBR, KC_NO,  KC_UNDS,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_CAPS,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_LGUI,                            KC_LEFT, KC_DOWN,  KC_UP,  KC_RGHT, KC_NO,   KC_NUBS,
+     KC_CAPS,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_LGUI,                            KC_LEFT, KC_DOWN,  KC_UP,  KC_RGHT, KC_NO,   KC_BSLS,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      _______,   KC_NO,  KC_NO,   KC_NO,   KC_NO,  KC_NO,  KC_END,            KC_PLUS,  KC_NO,   KC_NO,   KC_LT,  KC_GT,    KC_QUES, KC_PIPE,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    _______, _______,   _______,                    _______, _______, _______
+                                    _______, _______,   _______,                  _______, _______, _______
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
+  // NOTE: KC_NUM changes de behavior of the keypad from numbers to arrows
   [_RAISE] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
      KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                            KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_GRV,  KC_NO,    KC_UP,   KC_NO,   KC_NO,   KC_NO,                              KC_LPRN,  KC_P7,   KC_P8,   KC_P9,   KC_ASTR, KC_MINS,
+     KC_GRV,  KC_NO,    KC_UP,   KC_NO,   KC_NO,   KC_NO,                              KC_NUM,  KC_P7,   KC_P8,   KC_P9,   KC_ASTR, KC_MINS,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_DEL,  KC_LEFT, KC_DOWN, KC_RGHT, _______, KC_LBRC,                            KC_RPRN,   KC_P4,   KC_P5,   KC_P6,   KC_SLSH, KC_PLUS,
+     KC_DEL,  KC_LEFT, KC_DOWN, KC_RGHT, _______, KC_LBRC,                            KC_LPRN,   KC_P4,   KC_P5,   KC_P6,   KC_SLSH, KC_PLUS,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     RGB_MOD,  KC_NO,   KC_NO,   KC_NO,    KC_NO,  KC_LCBR, KC_NO,            KC_NO,   KC_NO,   KC_P1,   KC_P2,   KC_P3,   KC_DOT, KC_EQUAL,
+     RGB_MOD,  KC_NO,   KC_NO,   KC_NO,    KC_NO,  KC_LCBR, KC_NO,            KC_NO,   KC_RPRN,   KC_P1,   KC_P2,   KC_P3,   KC_DOT, KC_EQUAL,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     _______, _______, _______,                   KC_ENT,   KC_SPC,  KC_P0
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
