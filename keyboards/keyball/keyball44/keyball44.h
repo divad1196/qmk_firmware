@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "lib/keyball/keyball.h"
 
 // clang-format off
-
+/*
 #define LAYOUT_right_ball( \
     L00, L01, L02, L03, L04, L05,    R05, R04, R03, R02, R01, R00, \
     L10, L11, L12, L13, L14, L15,    R15, R14, R13, R12, R11, R10, \
@@ -90,8 +90,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         {   R20,   R21,   R22,   R23,   R24,   R25 }, \
         { KC_NO,   R31,   R32,   R33,   R34,   R35 }, \
     }
-
+*/
 // clang-format on
 
 #define LAYOUT LAYOUT_right_ball
-#define LAYOUT_universal LAYOUT_no_ball
+#define LAYOUT_universal LAYOUT_right_ball
