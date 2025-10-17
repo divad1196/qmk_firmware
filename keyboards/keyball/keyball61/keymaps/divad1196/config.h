@@ -1,31 +1,48 @@
-// Copyright 2023 Danny Nguyen (danny@keeb.io)
-// SPDX-License-Identifier: GPL-2.0-or-later
+/*
+This is the c configuration file for the keymap
+
+Copyright 2022 @Yowkees
+Copyright 2022 MURAOKA Taro (aka KoRoN, @kaoriya)
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #pragma once
 
-#define USB_VBUS_PIN GP0
-#define SERIAL_USART_FULL_DUPLEX
-#define SERIAL_USART_TX_PIN GP12
-#define SERIAL_USART_RX_PIN GP13
-#define SERIAL_USART_PIN_SWAP
-#define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
-#define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_TIMEOUT 1000U
-#define I2C_DRIVER I2CD2
-#define I2C1_SDA_PIN GP10
-#define I2C1_SCL_PIN GP11
+#ifdef RGBLIGHT_ENABLE
+#    define RGBLIGHT_EFFECT_BREATHING
+#    define RGBLIGHT_EFFECT_RAINBOW_MOOD
+#    define RGBLIGHT_EFFECT_RAINBOW_SWIRL
+#    define RGBLIGHT_EFFECT_SNAKE
+#    define RGBLIGHT_EFFECT_KNIGHT
+#    define RGBLIGHT_EFFECT_CHRISTMAS
+#    define RGBLIGHT_EFFECT_STATIC_GRADIENT
+#    define RGBLIGHT_EFFECT_RGB_TEST
+#    define RGBLIGHT_EFFECT_ALTERNATING
+#    define RGBLIGHT_EFFECT_TWINKLE
+#endif
+
+#define TAP_CODE_DELAY 5
+
+#define POINTING_DEVICE_AUTO_MOUSE_ENABLE
+#define AUTO_MOUSE_DEFAULT_LAYER 2
 
 
-// https://docs.qmk.fm/features/tri_layer#keycodes
-// #define TG_HOME TG(1)
-// #define TRI_LAYER_LOWER_LAYER 2
-// #define TRI_LAYER_UPPER_LAYER 3
-// #define TRI_LAYER_ADJUST_LAYER 4
-
-// Default values
-#define TRI_LAYER_LOWER_LAYER 1
-#define TRI_LAYER_UPPER_LAYER 2
-#define TRI_LAYER_ADJUST_LAYER 3
-
+/*
+qmk compile -kb keebio/iris_ce/rev1_divad1196 -km divad1196
+qmk compile -kb keyball/keyball61 -km divad1196
+*/
 
 // Home Row Mod
 // https://precondition.github.io/home-row-mods#tapping-term
@@ -70,15 +87,3 @@
 #define HOME_K RSFT_T(KC_K)
 #define HOME_L LALT_T(KC_L)
 #define HOME_SCLN RGUI_T(KC_SCLN)
-
-// // Left-hand home row mods
-// #define HOME_A LCTL_T(KC_A)
-// #define HOME_S LALT_T(KC_S)
-// #define HOME_D LSFT_T(KC_D)
-// #define HOME_F LGUI_T(KC_F)
-
-// // Right-hand home row mods
-// #define HOME_J LALT_T(KC_J)
-// #define HOME_K RSFT_T(KC_K)
-// #define HOME_L (KC_L)RCTL_T
-// #define HOME_SCLN RGUI_T(KC_SCLN)
