@@ -131,6 +131,12 @@ static void add_cpi(int16_t delta) {
 static void add_scroll_div(int8_t delta) {
     int8_t v = keyball_get_scroll_div() + delta;
     keyball_set_scroll_div(v < 1 ? 1 : v);
+
+#ifdef ENABLE_ACCUMULATED_SCROLLING
+    //Clear accumulation
+    keyball.scroll_accum_x = 0;
+    keyball.scroll_accum_y = 0;
+#endif
 }
 
 //////////////////////////////////////////////////////////////////////////////
