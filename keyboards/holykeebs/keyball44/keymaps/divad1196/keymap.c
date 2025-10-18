@@ -91,6 +91,42 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     #endif
 #endif
 
+void toggle_mouse_layer_on(void) {
+#ifdef MOUSE_LAYER
+    last_motion = timer_read();
+    if (!layer_state_is(MOUSE_LAYER)) {
+        layer_on(MOUSE_LAYER);
+        mouse_layer_auto = true;
+    }
+#endif
+}
+void mouse_layer_extend_timer(void) {
+#ifdef MOUSE_LAYER
+    if (mouse_layer_auto) {
+        toggle_mouse_layer_on();
+    }
+#endif
+}
+void toggle_mouse_layer_off(void) {
+#ifdef MOUSE_LAYER
+    if (mouse_layer_auto && layer_state_is(MOUSE_LAYER)) {
+        layer_off(MOUSE_LAYER);
+    }
+    mouse_layer_auto = false;
+#endif
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+#ifdef MOUSE_LAYER
+    if (record->event.pressed) {
+        if (layer_state_is(MOUSE_LAYER)) {
+            mouse_layer_extend_timer();
+        }
+    }
+#endif
+
+    return true;
+}
 
 layer_state_t layer_state_set_user(layer_state_t state) {
     // Auto enable scroll mode when the highest layer is 3
@@ -103,33 +139,16 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     return state;
 }
 
-void auto_toggle_mouse_layer_on(void) {
-#ifdef MOUSE_LAYER
-    last_motion = timer_read();
-    if (!layer_state_is(MOUSE_LAYER)) {
-        layer_on(MOUSE_LAYER);
-        mouse_layer_auto = true;
-    }
-#endif
-}
-void auto_toggle_mouse_layer_off(void) {
-#ifdef MOUSE_LAYER
-    if (mouse_layer_auto && layer_state_is(MOUSE_LAYER)) {
-        layer_off(MOUSE_LAYER);
-    }
-    mouse_layer_auto = false;
-#endif
-}
 
 report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
 #ifdef MOUSE_LAYER
     bool motion = (mouse_report.x != 0 || mouse_report.y != 0 || mouse_report.v != 0 || mouse_report.h != 0);
     if (motion) {
-        auto_toggle_mouse_layer_on();
+        toggle_mouse_layer_on();
     } else {
         // No motion — check if it's time to turn off the layer
         if (timer_elapsed(last_motion) > MOUSE_MOTION_TIMEOUT) {
-            auto_toggle_mouse_layer_off();
+            toggle_mouse_layer_off();
         }
     }
 #endif
