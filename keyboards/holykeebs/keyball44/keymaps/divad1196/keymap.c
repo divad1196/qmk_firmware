@@ -103,20 +103,33 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     return state;
 }
 
+void auto_toggle_mouse_layer_on(void) {
+#ifdef MOUSE_LAYER
+    last_motion = timer_read();
+    if (!layer_state_is(MOUSE_LAYER)) {
+        layer_on(MOUSE_LAYER);
+        mouse_layer_auto = true;
+    }
+#endif
+}
+void auto_toggle_mouse_layer_off(void) {
+#ifdef MOUSE_LAYER
+    if (mouse_layer_auto && layer_state_is(MOUSE_LAYER)) {
+        layer_off(MOUSE_LAYER);
+    }
+    mouse_layer_auto = false;
+#endif
+}
+
 report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
 #ifdef MOUSE_LAYER
     bool motion = (mouse_report.x != 0 || mouse_report.y != 0 || mouse_report.v != 0 || mouse_report.h != 0);
     if (motion) {
-        last_motion = timer_read();
-        if (!layer_state_is(MOUSE_LAYER)) {
-            layer_on(MOUSE_LAYER);
-            mouse_layer_auto = true;
-        }
+        auto_toggle_mouse_layer_on();
     } else {
         // No motion — check if it's time to turn off the layer
-        if (mouse_layer_auto && layer_state_is(MOUSE_LAYER) && timer_elapsed(last_motion) > MOUSE_MOTION_TIMEOUT) {
-            layer_off(MOUSE_LAYER);
-            mouse_layer_auto = false;
+        if (timer_elapsed(last_motion) > MOUSE_MOTION_TIMEOUT) {
+            auto_toggle_mouse_layer_off();
         }
     }
 #endif
