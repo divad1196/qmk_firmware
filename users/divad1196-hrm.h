@@ -3,8 +3,9 @@
 // https://precondition.github.io/home-row-mods#tapping-term
 // https://docs.qmk.fm/mod_tap#mod-tap
 
-#define TAPPING_TERM 200  // because we use PERMISSIVE_HOLD
-#define QUICK_TAP_TERM 0
+#define HRM_TAPPING_TERM 600  // because we use PERMISSIVE_HOLD
+#define TAPPING_TERM 200
+#define QUICK_TAP_TERM 120
 // https://docs.qmk.fm/tap_hold#retro-tapping
 #define RETRO_TAPPING
 // https://docs.qmk.fm/tap_hold#permissive-hold

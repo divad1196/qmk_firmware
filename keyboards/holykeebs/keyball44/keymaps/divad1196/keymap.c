@@ -27,14 +27,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB   , KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,                                        KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , KC_DEL   ,
     HOME_ESC , HOME_A   , HOME_S   , HOME_D   , HOME_F   , KC_G     ,                                        KC_H     , HOME_J   , HOME_K   , HOME_L   , HOME_SCLN, KC_QUOT  ,
     KC_LSFT  , KC_Z     , KC_X     , KC_C     , KC_V     , KC_B     ,                                        KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_SLSH  , KC_RSFT  ,
-              KC_LALT,KC_LGUI,LCTL_T(_______)     ,LT(1,KC_SPC),LT(3,_______),                  KC_BSPC,LT(2,KC_ENT), RCTL_T(KC_LNG2),     KC_RALT  , KC_PSCR
+                KC_LALT,KC_LGUI,LCTL_T(_______)    ,LT(1,KC_SPC),LT(3,KC_RALT),                  KC_BSPC,LT(2,KC_ENT), _______,     _______  , SCRL_TO
   ),
 
   [1] = LAYOUT_universal(
     SSNP_FRE ,  KC_F1   , KC_F2    , KC_F3   , KC_F4    , KC_F5    ,                                         KC_F6    , KC_F7    , KC_F8    , KC_F9    , KC_F10   , KC_F11   ,
     SSNP_VRT ,  SCRL_TO , SCRL_MO  , KC_UP   , KC_ENT   , KC_DEL   ,                                         KC_PGUP  , KC_BTN1  , KC_UP    , KC_BTN2  , KC_BTN3  , KC_F12   ,
     SSNP_HOR ,  _______ , KC_LEFT  , KC_DOWN , KC_RGHT  , KC_BSPC  ,                                         KC_PGDN  , KC_LEFT  , KC_DOWN  , KC_RGHT  , _______  , _______  ,
-                  _______  , _______ , _______  ,         _______  , _______  ,                   _______  , _______  , _______       , _______  , _______
+                  _______  , _______ , _______  ,         _______  , _______  ,                   _______  , SCRL_TO  , _______       , _______  , _______
   ),
 
   [2] = LAYOUT_universal(
@@ -48,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______  , AML_TO   , AML_I50  , AML_D50  , _______  , _______  ,                                        _______  , _______  , _______  , _______ , _______ , _______  ,
     _______  , _______  , _______  , _______  , _______  , SCRL_DVI ,                                        _______  , _______  , _______  , _______ , _______  , _______  ,
     _______ , _______  , _______  , _______  , _______  , SCRL_DVD ,                                        CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  , _______  , KBC_SAVE ,
-                  QK_BOOT  , KBC_RST  , _______  ,        _______  , _______  ,                   _______  , _______  , _______       , KBC_RST  , QK_BOOT
+                  QK_BOOT  , KBC_RST  , _______  ,        _______  , _______  ,                   _______  , _______  , _______       , _______  , QK_BOOT
   ),
 
   [4] = LAYOUT_universal(
@@ -81,11 +81,46 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
+
+
+#ifdef MOUSE_LAYER
+    static uint16_t last_motion = 0;
+    static bool mouse_layer_auto = false;
+    #ifndef MOUSE_MOTION_TIMEOUT
+        #define MOUSE_MOTION_TIMEOUT 500
+    #endif
+#endif
+
+
 layer_state_t layer_state_set_user(layer_state_t state) {
     // Auto enable scroll mode when the highest layer is 3
     keyball_set_scroll_mode(get_highest_layer(state) == 3);
-    // return update_tri_layer_state(state, TRI_LAYER_LOWER_LAYER, TRI_LAYER_UPPER_LAYER, TRI_LAYER_ADJUST_LAYER);
+#ifdef MOUSE_LAYER
+    if (!layer_state_cmp(state, MOUSE_LAYER)) {
+        mouse_layer_auto = false;
+    }
+#endif
     return state;
+}
+
+report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
+#ifdef MOUSE_LAYER
+    bool motion = (mouse_report.x != 0 || mouse_report.y != 0 || mouse_report.v != 0 || mouse_report.h != 0);
+    if (motion) {
+        last_motion = timer_read();
+        if (!layer_state_is(MOUSE_LAYER)) {
+            layer_on(MOUSE_LAYER);
+            mouse_layer_auto = true;
+        }
+    } else {
+        // No motion — check if it's time to turn off the layer
+        if (mouse_layer_auto && layer_state_is(MOUSE_LAYER) && timer_elapsed(last_motion) > MOUSE_MOTION_TIMEOUT) {
+            layer_off(MOUSE_LAYER);
+            mouse_layer_auto = false;
+        }
+    }
+#endif
+    return mouse_report;
 }
 
 // https://docs.qmk.fm/tap_hold#hold-on-other-key-press
@@ -106,14 +141,30 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case HOME_ESC:
             // return TAPPING_TERM + 1250;
             return 150;
+#ifdef HRM_TAPPING_TERM
+        case HOME_A:
+        case HOME_S:
+        case HOME_D :
+        case HOME_F:
+        case HOME_J:
+        case HOME_K:
+        case HOME_L:
+        case HOME_SCLN:
+            return HRM_TAPPING_TERM;
+#endif
         default:
             return TAPPING_TERM;
     }
 }
 
+// RETRO_TAPPING_PER_KEY
 bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case HOME_ESC:
+            return false;
+        // Detect all Layer-Tap keys (LT(layer, key))
+        case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
+            // Disable retro-tap for any LT(...)
             return false;
         default:
             return true;

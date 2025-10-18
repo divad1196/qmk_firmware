@@ -34,6 +34,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define SCROLL_START_THRESHOLD 1
 // TODO: improve `keyball_on_apply_motion_to_mouse_scroll` for smooth scrolling with small movements
 
+
+#define MOUSE_LAYER 1  // replace with your actual mouse layer number
+#define TG_MOUSE TG(MOUSE_LAYER)
+#define MOUSE_MOTION_TIMEOUT 1000  // ms after which we disable mouse layer
+
 #define KEYBALL_SCROLL_DIV_DEFAULT 3
 #define KEYBALL_SCROLLBALL_INHIVITOR 50
 
