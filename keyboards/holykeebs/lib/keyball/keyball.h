@@ -32,6 +32,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #    define KEYBALL_SCROLLBALL_INHIVITOR 50
 #endif
 
+#ifndef SCROLL_START_THRESHOLD
+#   define SCROLL_START_THRESHOLD 1  // Trackball motion units before a scroll starts
+#endif
+
 /// To disable scroll snap feature, define 0 in your config.h
 #ifndef KEYBALL_SCROLLSNAP_ENABLE
 #    define KEYBALL_SCROLLSNAP_ENABLE 2
@@ -166,6 +170,11 @@ typedef struct {
     int8_t   scroll_snap_tension_h;
 #elif KEYBALL_SCROLLSNAP_ENABLE == 2
     keyball_scrollsnap_mode_t scrollsnap_mode;
+#endif
+
+#ifdef ENABLE_ACCUMULATED_SCROLLING
+    mouse_xy_report_t scroll_accum_x;
+    mouse_xy_report_t scroll_accum_y;
 #endif
 
     uint16_t       last_kc;

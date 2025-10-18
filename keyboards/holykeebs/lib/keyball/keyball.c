@@ -156,11 +156,39 @@ __attribute__((weak)) void keyball_on_apply_motion_to_mouse_move(report_mouse_t 
 
 }
 
+
 __attribute__((weak)) void keyball_on_apply_motion_to_mouse_scroll(report_mouse_t *report, report_mouse_t *output, bool is_left) {
     // consume motion of trackball.
+
+    // Apply the usual divider
     int16_t div = 1 << (keyball_get_scroll_div() - 1);
+
+// The goal here is to provide a smooth acceleration to
+// transition from small to wide movements
+#ifdef ENABLE_ACCUMULATED_SCROLLING
+    keyball.scroll_accum_x += report->x;
+    keyball.scroll_accum_y += report->y;
+
+    int16_t x = 0;
+    int16_t y = 0;
+
+    // 2. Check and process X-axis scroll
+    if (abs(keyball.scroll_accum_x) >= SCROLL_START_THRESHOLD) {
+        // If accumulation meets threshold, apply a small divider to output scroll
+        // This ensures small trackball movements result in small, controlled scroll steps.
+        x = divmod16(&keyball.scroll_accum_x, div);
+    }
+
+    // 3. Check and process Y-axis scroll
+    if (abs(keyball.scroll_accum_y) >= SCROLL_START_THRESHOLD) {
+        // Apply to the Y accumulation
+        y = divmod16(&keyball.scroll_accum_y, div);
+    }
+
+#else
     int16_t x = divmod16(&report->x, div);
     int16_t y = divmod16(&report->y, div);
+#endif
 
     // apply to mouse report.
 #if KEYBALL_MODEL == 61 || KEYBALL_MODEL == 39 || KEYBALL_MODEL == 147 || KEYBALL_MODEL == 44
@@ -174,6 +202,10 @@ __attribute__((weak)) void keyball_on_apply_motion_to_mouse_scroll(report_mouse_
 #else
 #    error("unknown Keyball model")
 #endif
+
+    // clear motion
+    report->x = 0;
+    report->y = 0;
 
     // Scroll snapping
 #if KEYBALL_SCROLLSNAP_ENABLE == 1
@@ -212,8 +244,8 @@ static void motion_to_mouse(report_mouse_t *report, report_mouse_t *output, bool
     }
 
     // clear motion
-    report->x = 0;
-    report->y = 0;
+    // report->x = 0;
+    // report->y = 0;
 }
 
 report_mouse_t pointing_device_task_combined_kb(report_mouse_t left_report, report_mouse_t right_report) {
