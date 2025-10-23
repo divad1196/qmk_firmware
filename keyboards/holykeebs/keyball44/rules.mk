@@ -33,6 +33,7 @@ SRC += lib/oledkit/oledkit.c    # OLED utility for Keyball series.
 
 # Include common library
 SRC += lib/keyball/keyball.c
+# SRC += divad1196/mouse.c
 
 # Disable other features to squeeze firmware size
 SPACE_CADET_ENABLE = no

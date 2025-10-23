@@ -26,7 +26,7 @@
 #define TRI_LAYER_UPPER_LAYER 2
 #define TRI_LAYER_ADJUST_LAYER 3
 
-#include "users/divad1196-hrm.h"
+#include "users/divad1196/hrm.h"
 
 #define LT_ENTER LT(TRI_LAYER_UPPER_LAYER, KC_ENT)
 #define LT_SPACE LT(TRI_LAYER_LOWER_LAYER, KC_SPC)

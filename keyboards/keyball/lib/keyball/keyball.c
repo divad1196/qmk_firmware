@@ -129,6 +129,12 @@ static void add_cpi(int8_t delta) {
 static void add_scroll_div(int8_t delta) {
     int8_t v = keyball_get_scroll_div() + delta;
     keyball_set_scroll_div(v < 1 ? 1 : v);
+
+#ifdef ENABLE_ACCUMULATED_SCROLLING
+    //Clear accumulation
+    keyball.scroll_accum_x = 0;
+    keyball.scroll_accum_y = 0;
+#endif
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -168,29 +174,58 @@ void pointing_device_driver_set_cpi(uint16_t cpi) {
 }
 
 __attribute__((weak)) void keyball_on_apply_motion_to_mouse_move(keyball_motion_t *m, report_mouse_t *r, bool is_left) {
-#if KEYBALL_MODEL == 61 || KEYBALL_MODEL == 39 || KEYBALL_MODEL == 147 || KEYBALL_MODEL == 44
-    r->x = clip2int8(m->y);
-    r->y = clip2int8(m->x);
-    if (is_left) {
-        r->x = -r->x;
-        r->y = -r->y;
-    }
-#elif KEYBALL_MODEL == 46
-    r->x = clip2int8(m->x);
-    r->y = -clip2int8(m->y);
-#else
-#    error("unknown Keyball model")
-#endif
+// #if KEYBALL_MODEL == 61 || KEYBALL_MODEL == 39 || KEYBALL_MODEL == 147 || KEYBALL_MODEL == 44
+//     r->x = clip2int8(m->y);
+//     r->y = clip2int8(m->x);
+//     if (is_left) {
+//         r->x = -r->x;
+//         r->y = -r->y;
+//     }
+// #elif KEYBALL_MODEL == 46
+//     r->x = clip2int8(m->x);
+//     r->y = -clip2int8(m->y);
+// #else
+// #    error("unknown Keyball model")
+// #endif
+
+    r->x = m->y;
+    r->y = m->x;
+
     // clear motion
     m->x = 0;
     m->y = 0;
+
 }
 
 __attribute__((weak)) void keyball_on_apply_motion_to_mouse_scroll(keyball_motion_t *m, report_mouse_t *r, bool is_left) {
     // consume motion of trackball.
     int16_t div = 1 << (keyball_get_scroll_div() - 1);
+// The goal here is to provide a smooth acceleration to
+// transition from small to wide movements
+#ifdef ENABLE_ACCUMULATED_SCROLLING
+    keyball.scroll_accum_x += m->x;
+    keyball.scroll_accum_y += m->y;
+
+    int16_t x = 0;
+    int16_t y = 0;
+
+    // 2. Check and process X-axis scroll
+    if (abs(keyball.scroll_accum_x) >= SCROLL_START_THRESHOLD) {
+        // If accumulation meets threshold, apply a small divider to output scroll
+        // This ensures small trackball movements result in small, controlled scroll steps.
+        x = divmod16(&keyball.scroll_accum_x, div);
+    }
+
+    // 3. Check and process Y-axis scroll
+    if (abs(keyball.scroll_accum_y) >= SCROLL_START_THRESHOLD) {
+        // Apply to the Y accumulation
+        y = divmod16(&keyball.scroll_accum_y, div);
+    }
+
+#else
     int16_t x = divmod16(&m->x, div);
     int16_t y = divmod16(&m->y, div);
+#endif
 
     // apply to mouse report.
 #if KEYBALL_MODEL == 61 || KEYBALL_MODEL == 39 || KEYBALL_MODEL == 147 || KEYBALL_MODEL == 44
