@@ -173,11 +173,6 @@ typedef struct {
     keyball_scrollsnap_mode_t scrollsnap_mode;
 #endif
 
-#ifdef ENABLE_ACCUMULATED_SCROLLING
-    int16_t scroll_accum_x;
-    int16_t scroll_accum_y;
-#endif
-
     uint16_t       last_kc;
     keypos_t       last_pos;
     report_mouse_t last_mouse;

@@ -1,3 +1,5 @@
+# qmk flash --bootloader caterina .build/Keyball61_via_v1.3.2.hex
+
 # MCU name
 MCU = atmega32u4
 
@@ -21,7 +23,7 @@ CUSTOM_MATRIX = lite
 SRC += lib/duplexmatrix/duplexmatrix.c
 
 # Keyball61 is split keyboard.
-SPLIT_KEYBOARD = yes
+# SPLIT_KEYBOARD = yes  // Defined in keyboard.json
 
 # Optical sensor driver for trackball.
 POINTING_DEVICE_ENABLE = yes
@@ -46,7 +48,8 @@ SRC += lib/oledkit/oledkit.c    # OLED utility for Keyball series.
 
 # Include common library
 SRC += lib/keyball/keyball.c
-# SRC += divad1196/mouse.c
+# Already added
+# SRC += users/divad1196/mouse.c
 # SRC += $(QMK_KEYBOARD)/users/divad1196/mouse.c
 
 # Disable other features to squeeze firmware size

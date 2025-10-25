@@ -28,7 +28,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Split parameters
 #define SOFT_SERIAL_PIN         D2
+
+// Fix inverted hand issue
+// #define SPLIT_HAND_MATRIX_GRID D7, F7
+
 #define SPLIT_HAND_MATRIX_GRID  F7, D7
+// https://github.com/Yowkees/keyball/issues/588
+#define SPLIT_HAND_MATRIX_GRID_LOW_IS_LEFT
+
 #define SPLIT_USB_DETECT
 #ifdef OLED_ENABLE
 #    define SPLIT_OLED_ENABLE

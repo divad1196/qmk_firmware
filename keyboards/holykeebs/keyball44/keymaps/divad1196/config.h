@@ -35,3 +35,8 @@ qmk compile -kb holykeebs/keyball44 -km divad1196
 
 #include "users/divad1196/keyball.h"
 #include "users/divad1196/hrm.h"
+
+/// Scroll behavior
+#define ENABLE_ACCUMULATED_SCROLLING
+#define SCROLL_START_THRESHOLD 1
+// TODO: improve `keyball_on_apply_motion_to_mouse_scroll` for smooth scrolling with small movements

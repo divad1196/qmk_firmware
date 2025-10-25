@@ -38,10 +38,13 @@ qmk compile -kb keyball/keyball61 -km divad1196
 */
 
 
-#include "users/divad1196/keyball.h"
 #include "users/divad1196/hrm.h"
 
 #define TAP_CODE_DELAY 5
+
+
+// The following is conflicting with my custom code
+#include "users/divad1196/keyball.h"
 
 #define POINTING_DEVICE_AUTO_MOUSE_ENABLE
 #define AUTO_MOUSE_DEFAULT_LAYER MOUSE_LAYER

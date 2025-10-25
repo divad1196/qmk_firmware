@@ -34,3 +34,17 @@ void toggle_mouse_layer_off(void) {
     mouse_layer_auto = false;
 #endif
 }
+
+
+void refresh_mouse_layer(bool motion) {
+#ifdef MOUSE_LAYER
+if (motion) {
+    toggle_mouse_layer_on();
+} else {
+    // No motion — check if it's time to turn off the layer
+    if (timer_elapsed(last_motion) > MOUSE_MOTION_TIMEOUT) {
+        toggle_mouse_layer_off();
+    }
+}
+#endif
+}

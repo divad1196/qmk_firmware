@@ -1,14 +1,11 @@
 #define KEYBALL_CPI_DEFAULT 500
 
-/// Scroll behavior
-#define ENABLE_ACCUMULATED_SCROLLING
-#define SCROLL_START_THRESHOLD 1
-// TODO: improve `keyball_on_apply_motion_to_mouse_scroll` for smooth scrolling with small movements
-
 
 #define MOUSE_LAYER 1  // replace with your actual mouse layer number
+// #define AUTO_MOUSE_DEFAULT_LAYER MOUSE_LAYER
 #define TG_MOUSE TG(MOUSE_LAYER)
-#define MOUSE_MOTION_TIMEOUT 1000  // ms after which we disable mouse layer
+#define MOUSE_MOTION_TIMEOUT 500  // ms after which we disable mouse layer
+// #define MOUSE_EXTEND_ON_USE
 
 #define KEYBALL_SCROLL_DIV_DEFAULT 3
 #define KEYBALL_SCROLLBALL_INHIVITOR 50
