@@ -166,6 +166,8 @@ typedef struct {
     uint32_t scroll_mode_changed;
     uint8_t  scroll_div;
 
+    bool     volume_mode;
+
 #if KEYBALL_SCROLLSNAP_ENABLE == 1
     uint32_t scroll_snap_last;
     int8_t   scroll_snap_tension_h;
@@ -229,6 +231,12 @@ bool keyball_get_scroll_mode(void);
 
 /// keyball_set_scroll_mode modify scroll mode.
 void keyball_set_scroll_mode(bool mode);
+
+/// keyball_get_volume_mode gets current volume mode.
+bool keyball_get_volume_mode(void);
+
+/// keyball_set_volume_mode modify volume mode.
+void keyball_set_volume_mode(bool mode);
 
 /// keyball_get_scrollsnap_mode gets current scroll snap mode.
 keyball_scrollsnap_mode_t keyball_get_scrollsnap_mode(void);

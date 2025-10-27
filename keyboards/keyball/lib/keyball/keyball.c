@@ -52,6 +52,8 @@ keyball_t keyball = {
     .scroll_mode = false,
     .scroll_div  = 0,
 
+    .volume_mode = false,
+
     .pressing_keys = { BL, BL, BL, BL, BL, BL, 0 },
 };
 
@@ -174,23 +176,19 @@ void pointing_device_driver_set_cpi(uint16_t cpi) {
 }
 
 __attribute__((weak)) void keyball_on_apply_motion_to_mouse_move(keyball_motion_t *m, report_mouse_t *r, bool is_left) {
-// #if KEYBALL_MODEL == 61 || KEYBALL_MODEL == 39 || KEYBALL_MODEL == 147 || KEYBALL_MODEL == 44
-//     r->x = clip2int8(m->x);
-//     r->y = clip2int8(m->y);
-//     // r->x = clip2int8(m->y);
-//     // r->y = clip2int8(m->x);
-//     if (is_left) {
-//         r->x = -r->x;
-//         r->y = -r->y;
-//     }
-// #elif KEYBALL_MODEL == 46
-//     r->x = clip2int8(m->y);
-//     r->y = -clip2int8(m->x);
-// #else
-// #    error("unknown Keyball model")
-// #endif
+#if KEYBALL_MODEL == 61 || KEYBALL_MODEL == 39 || KEYBALL_MODEL == 147 || KEYBALL_MODEL == 44
     r->x = clip2int8(m->y);
     r->y = clip2int8(m->x);
+    if (is_left) {
+        r->x = -r->x;
+        r->y = -r->y;
+    }
+#elif KEYBALL_MODEL == 46
+    r->x = clip2int8(m->y);
+    r->y = -clip2int8(m->x);
+#else
+#    error("unknown Keyball model")
+#endif
 
     // clear motion
     m->x = 0;
@@ -248,9 +246,21 @@ __attribute__((weak)) void keyball_on_apply_motion_to_mouse_scroll(keyball_motio
 #endif
 }
 
-static void motion_to_mouse(keyball_motion_t *m, report_mouse_t *r, bool is_left, bool as_scroll) {
+__attribute__((weak)) void apply_motion_to_volume(int32_t norm) {}
+
+__attribute__((weak)) void keyball_on_apply_motion_to_volume(keyball_motion_t *m, report_mouse_t *r, bool is_left) {
+    int32_t norm = m->y;
+    apply_motion_to_volume(norm);
+    m->x = 0;
+    m->y = 0;
+}
+
+static void motion_to_mouse(keyball_motion_t *m, report_mouse_t *r, bool is_left, bool as_scroll, bool as_volume) {
+    uprintf("motion y=%d volume_mode=%d\n", m->y, as_volume);
     if (as_scroll) {
         keyball_on_apply_motion_to_mouse_scroll(m, r, is_left);
+    } else if (as_volume) {
+        keyball_on_apply_motion_to_volume(m, r, is_left);
     } else {
         keyball_on_apply_motion_to_mouse_move(m, r, is_left);
     }
@@ -291,8 +301,8 @@ report_mouse_t pointing_device_driver_get_report(report_mouse_t rep) {
     // report mouse event, if keyboard is primary.
     if (is_keyboard_master() && should_report()) {
         // modify mouse report by PMW3360 motion.
-        motion_to_mouse(&keyball.this_motion, &rep, is_keyboard_left(), keyball.scroll_mode);
-        motion_to_mouse(&keyball.that_motion, &rep, !is_keyboard_left(), keyball.scroll_mode ^ keyball.this_have_ball);
+        motion_to_mouse(&keyball.this_motion, &rep, is_keyboard_left(), keyball.scroll_mode, keyball.volume_mode);
+        motion_to_mouse(&keyball.that_motion, &rep, !is_keyboard_left(), keyball.scroll_mode ^ keyball.this_have_ball, keyball.volume_mode ^ keyball.this_have_ball);
         // store mouse report for OLED.
         keyball.last_mouse = rep;
     }
@@ -536,6 +546,17 @@ void keyball_set_scroll_mode(bool mode) {
         keyball.scroll_mode_changed = timer_read32();
     }
     keyball.scroll_mode = mode;
+}
+
+bool keyball_get_volume_mode(void) {
+    return keyball.volume_mode;
+}
+
+void keyball_set_volume_mode(bool mode) {
+    // if (mode != keyball.volume_mode) {
+    //     keyball.volume_mode_changed = timer_read32();
+    // }
+    keyball.volume_mode = mode;
 }
 
 keyball_scrollsnap_mode_t keyball_get_scrollsnap_mode(void) {

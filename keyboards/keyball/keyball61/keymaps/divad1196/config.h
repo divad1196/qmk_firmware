@@ -40,12 +40,36 @@ qmk compile -kb keyball/keyball61 -km divad1196
 
 #include "users/divad1196/hrm.h"
 
+// https://docs.qmk.fm/feature_macros#tap-code-delay-kc-delay
 #define TAP_CODE_DELAY 5
 
 
 // The following is conflicting with my custom code
 #include "users/divad1196/keyball.h"
 
-#define POINTING_DEVICE_AUTO_MOUSE_ENABLE
-#define AUTO_MOUSE_DEFAULT_LAYER MOUSE_LAYER
 
+// https://docs.qmk.fm/feature_layers
+// https://docs.qmk.fm/features/leader_key
+// https://docs.qmk.fm/features/combo
+//
+
+// ==================================================================================
+#define AUTO_MOUSE_DEFAULT_LAYER MOUSE_LAYER
+// #define POINTING_DEVICE_AUTO_MOUSE_ENABLE
+
+
+// ==================================================================================
+// https://docs.qmk.fm/features/pointing_device
+
+// TODO: Use the following to fix the trackball orientation ?
+// https://docs.qmk.fm/features/pointing_device#split-keyboard-configuration
+// #define SPLIT_POINTING_ENABLE
+
+// #define POINTING_DEVICE_LEFT
+// #define POINTING_DEVICE_RIGHT
+// #define POINTING_DEVICE_COMBINED
+// #define POINTING_DEVICE_ROTATION_90_RIGHT
+// #define POINTING_DEVICE_ROTATION_180_RIGHT
+// #define POINTING_DEVICE_ROTATION_270_RIGHT
+// #define POINTING_DEVICE_INVERT_X_RIGHT
+// #define POINTING_DEVICE_INVERT_Y_RIGHT

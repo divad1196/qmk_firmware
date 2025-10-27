@@ -20,6 +20,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "quantum.h"
 // #include "users/divad1196/mouse.h"
+#include "users/divad1196/volume.h"
+
+// enum LAYERS {
+//     BASE_LAYER,
+//     MOUSE_LAYER,
+//     NUMPAD_LAYER,
+//     SYMBOL_LAYER,
+//     CFG_LAYER,
+// }
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -28,7 +37,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB   , KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,                                  KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , KC_BSPC  ,
     HOME_ESC , HOME_A   , HOME_S   , HOME_D   , HOME_F   , KC_G     ,                                  KC_H     , HOME_J   , HOME_K   , HOME_L   , HOME_SCLN, KC_QUOT  ,
     KC_LSFT  , KC_Z     , KC_X     , KC_C     , KC_V     , KC_B     , KC_RBRC  ,              KC_NUHS, KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_SLSH  , KC_RSFT  ,
-    _______  , KC_LCTL  , KC_LALT  , KC_LGUI,LT(1,_______),LT(1,KC_SPC),LT(3,_______),    KC_BSPC,LT(2,KC_ENT),LT(1,_______),KC_RGUI, _______ , TG_MOUSE  , TG_MOUSE
+    _______  , KC_LCTL  , KC_LALT  , KC_LGUI,LT(3,_______),LT(1,KC_SPC),LT(4,_______),    KC_BSPC,LT(2,KC_ENT),LT(1,_______),_______, _______ , _______ , TG_MOUSE
   ),
 
   [1] = LAYOUT_universal(
@@ -40,17 +49,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [2] = LAYOUT_universal(
-    _______  , _______ , _______  , _______   , _______  ,_______,                                     _______  , _______  , _______  , _______  , _______  , _______  ,
-    _______  ,S(KC_QUOT), KC_7     , KC_8     , KC_9     , _______  ,                                  S(KC_9)  , S(KC_1)  , S(KC_6)  , KC_LBRC  , S(KC_4)  , _______  ,
-    _______  ,S(KC_SCLN), KC_4     , KC_5     , KC_6     ,S(KC_SCLN),                                  KC_NUHS  , KC_MINS  , S(KC_EQL), S(KC_3)  , KC_QUOT  , S(KC_2)  ,
-    _______  ,S(KC_MINS), KC_1     , KC_2     , KC_3     ,S(KC_MINS), S(KC_8)  ,             _______ , S(KC_NUHS),S(KC_INT1), KC_EQL   ,S(KC_LBRC),S(KC_SLSH),S(KC_INT3),
+    _______  , _______ , _______  , _______   , _______  ,_______,                                     _______  , _______  , _______  , _______  , _______  , _______   ,
+    _______  ,S(KC_QUOT), KC_7     , KC_8     , KC_9     , _______  ,                                  KC_CIRC  , KC_AMPR  , KC_ASTR  , KC_LPRN  , KC_RPRN  , KC_BSPC   ,
+    _______  ,S(KC_SCLN), KC_4     , KC_5     , KC_6     ,S(KC_SCLN),                                  KC_MINS  , KC_EQL   , KC_LBRC  , KC_RBRC  , KC_BSLS  , KC_GRV    ,
+    _______  ,S(KC_MINS), KC_1     , KC_2     , KC_3     ,S(KC_MINS), S(KC_8)  ,             _______ , KC_UNDS  , KC_PLUS  , KC_LCBR  , KC_RCBR  , KC_PIPE  , KC_TILD   ,
     _______  , _______  , KC_0     , KC_DOT   , _______  , _______  , _______  ,             KC_DEL  , _______  , _______  , _______  , _______  , _______  , _______
   ),
 
   [3] = LAYOUT_universal(
+    _______  , _______ , _______  , _______   , _______  , _______  ,                                  _______  , _______  , _______  , _______  , _______  , _______   ,
+    KC_TAB   , KC_EXLM , KC_AT    , KC_HASH   , KC_DLR   , KC_PERC  ,                                  KC_CIRC  , KC_AMPR  , KC_ASTR  , KC_LPRN  , KC_RPRN  , KC_BSPC   ,
+    KC_LCTL  , _______ , _______  , _______   , _______  , _______  ,                                  KC_MINS  , KC_EQL   , KC_LBRC  , KC_RBRC  , KC_BSLS  , KC_GRV    ,
+    KC_LSFT  , _______ , _______  , _______   , _______  , _______  , _______  ,             _______ , KC_UNDS  , KC_PLUS  , KC_LCBR  , KC_RCBR  , KC_PIPE  , KC_TILD   ,
+    _______  , _______ , _______  , _______   , _______  , _______  , _______  ,             KC_DEL  , _______  , _______  , _______  , _______  , _______  , _______
+  ),
+
+  [4] = LAYOUT_universal(
     _______  , _______ , _______  , _______   , _______  ,_______,                                     _______  , _______  , _______  , _______  , _______  , _______  ,
-    _______  , AML_TO   , AML_I50  , AML_D50  , _______  , _______  ,                                  _______  , _______  , _______  , _______  , _______  , _______  ,
-    _______  , _______  , _______  , _______  , _______  , SCRL_DVI  ,                                 _______  , _______  , _______  , _______  , _______  , _______  ,
+    _______  , _______ , _______  , _______   , _______  , _______  ,                                  _______  , _______  , _______  , _______  , _______  , _______  ,
+    _______  , AML_TO   , AML_I50  , AML_D50  , _______  , SCRL_DVI  ,                                 _______  , _______  , _______  , _______  , _______  , _______  ,
     _______  , _______  , _______  , _______  , _______  , SCRL_DVD  , EE_CLR   ,            EE_CLR  , CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  , KBC_SAVE , KBC_RST  ,
     _______  , _______  , QK_BOOT  , _______  , _______  , _______   , _______  ,            _______  , _______  , _______  , _______  , _______  , QK_BOOT , _______
   ),
@@ -70,9 +87,15 @@ void oledkit_render_info_user(void) {
 
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    // Auto enable scroll mode when the highest layer is 3
-    keyball_set_scroll_mode(get_highest_layer(state) == 3);
+    keyball_set_volume_mode(get_highest_layer(state) == 3);
+    keyball_set_scroll_mode(get_highest_layer(state) == 4);
     return state;
+}
+
+void pointing_device_init_user(void) {
+    // https://docs.qmk.fm/features/pointing_device#how-to-enable
+    // set_auto_mouse_layer(<mouse_layer>); // only required if AUTO_MOUSE_DEFAULT_LAYER is not set to index of <mouse_layer>
+    // set_auto_mouse_enable(true);         // always required before the auto mouse feature will work
 }
 
 // ==============================================================================================================================
@@ -113,6 +136,22 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
     return mouse_report;
 }
 */
+
+
+// ==============================================================================================================================
+
+
+void apply_motion_to_volume(int32_t norm) {
+    // #define MOTION_VOLUME_COOLDOWN_THRESHOLD 10
+    // #define MOTION_VOLUME_COOLDOWN 50 // Try 50ms, then adjust (shorter = faster steps)
+    // apply_volume_with_cooldown(norm, MOTION_VOLUME_COOLDOWN_THRESHOLD, MOTION_VOLUME_COOLDOWN);
+
+    #define MOTION_VOLUME_ACCEL_THRESHOLD 30 // Use a slightly higher base threshold
+    #define MOTION_VOLUME_ACCEL_FACTOR 5 // Higher factor means faster acceleration
+    apply_volume_with_acceleration(norm, MOTION_VOLUME_ACCEL_THRESHOLD, MOTION_VOLUME_ACCEL_FACTOR);
+}
+
+
 // ==============================================================================================================================
 
 // https://docs.qmk.fm/tap_hold#hold-on-other-key-press
