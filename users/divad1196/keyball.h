@@ -1,7 +1,7 @@
 #define KEYBALL_CPI_DEFAULT 500
 
 
-#define MOUSE_LAYER 1  // replace with your actual mouse layer number
+// #define MOUSE_LAYER 1  // replace with your actual mouse layer number
 // #define AUTO_MOUSE_DEFAULT_LAYER MOUSE_LAYER
 #define TG_MOUSE TG(MOUSE_LAYER)
 #define MOUSE_MOTION_TIMEOUT 500  // ms after which we disable mouse layer

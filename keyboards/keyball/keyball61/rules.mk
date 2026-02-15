@@ -48,7 +48,7 @@ SRC += lib/oledkit/oledkit.c    # OLED utility for Keyball series.
 
 # Include common library
 SRC += lib/keyball/keyball.c
-# Already added
+# Already added (How ?)
 # SRC += users/divad1196/mouse.c
 # SRC += $(QMK_KEYBOARD)/users/divad1196/mouse.c
 
