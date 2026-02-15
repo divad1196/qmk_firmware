@@ -2,8 +2,8 @@
 
 
 // #define MOUSE_LAYER 1  // replace with your actual mouse layer number
-// #define AUTO_MOUSE_DEFAULT_LAYER MOUSE_LAYER
-#define TG_MOUSE TG(MOUSE_LAYER)
+// #define AUTO_MOUSE_DEFAULT_LAYER 1
+#define TG_MOUSE TG(1)
 #define MOUSE_MOTION_TIMEOUT 500  // ms after which we disable mouse layer
 // #define MOUSE_EXTEND_ON_USE
 
